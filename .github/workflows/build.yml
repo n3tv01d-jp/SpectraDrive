@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+            # No -G: CMake uses whichever Visual Studio the runner has installed.
+            configure: -A x64
+          - name: macOS
+            os: macos-latest
+            configure: -G Xcode -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build ${{ matrix.configure }} -DSPECTRADRIVE_BUILD_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Engine tests
+        shell: bash
+        run: |
+          if [ -f build/Release/engine_test.exe ]; then build/Release/engine_test.exe; else build/Release/engine_test; fi
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpectraDrive-${{ matrix.name }}-VST3
+          path: build/SpectraDrive_artefacts/Release/VST3/SpectraDrive.vst3
