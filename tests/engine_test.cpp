@@ -1,3 +1,8 @@
+// Copyright (C) 2026 Spectra
+//
+// This file is part of SpectraDrive, licensed under the GNU Affero General Public
+// License v3.0 (AGPLv3). See the LICENSE file in the project root for details.
+
 // Standalone checks for the drive engine: transparency, latency, harmonic character,
 // aliasing, stability, auto gain and CPU cost. Build with -DSPECTRADRIVE_BUILD_TESTS=ON
 // -DSPECTRADRIVE_PLUGIN=OFF.

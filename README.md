@@ -106,6 +106,13 @@ cmake -S . -B build-test -DSPECTRADRIVE_PLUGIN=OFF -DSPECTRADRIVE_BUILD_TESTS=ON
 cmake --build build-test && ./build-test/engine_test
 ```
 
+## License
+
+Copyright (C) 2026 Spectra
+
+SpectraDrive is licensed under the GNU Affero General Public License v3.0 (AGPLv3).
+See [LICENSE](LICENSE) for the full text.
+
 ## License note
 
 SpectraDrive is built on [JUCE](https://juce.com) 8. JUCE is free for personal use and
